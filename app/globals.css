@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --bg: #080b12;
+  --surface: #141924;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f2f5f9;
+  --text-dim: #98a2b3;
+  --accent: #3b9eff;
+  --danger: #e4572e;
+  --gold: #e0a93b;
+  /* leitor: preferencias controladas por JS */
+  --reader-size: 1.0625rem;
+  --reader-width: 44rem;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Modo claro do leitor */
+.reader-light {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --text: #14181f;
+  --text-dim: #566173;
+}
+
+::selection { background: rgba(59, 158, 255, 0.25); }
+
+.glass {
+  background: rgba(20, 25, 36, 0.6);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)) , var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+.text-dim { color: var(--text-dim); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Menção @nickname no fórum: destaque + animação leve no hover */
+.mention {
+  color: var(--accent);
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 0 2px;
+  background: rgba(59, 158, 255, 0.08);
+  transition: background 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+  display: inline-block;
+}
+.mention:hover {
+  background: rgba(59, 158, 255, 0.18);
+  transform: translateY(-1px);
+  filter: brightness(1.2);
+}
+
+/* Prosa do leitor */
+.reader-prose { font-size: var(--reader-size); line-height: 1.8; max-width: var(--reader-width); }
+.reader-prose h2 { font-size: 1.6em; font-weight: 800; margin: 2.2em 0 0.8em; letter-spacing: -0.02em; }
+.reader-prose h3 { font-size: 1.15em; font-weight: 700; margin: 1.8em 0 0.6em; }
+.reader-prose p { margin: 1em 0; }
+.reader-prose strong { color: var(--accent); font-weight: 600; }
+.reader-prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.9em; }
+.reader-prose th, .reader-prose td { border: 1px solid var(--border); padding: 0.6em 0.8em; text-align: left; }
+.reader-prose th { color: var(--accent); font-family: var(--font-mono); font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; }
+.reader-prose blockquote { border-left: 2px solid var(--accent); padding-left: 1em; color: var(--text-dim); margin: 1.5em 0; }
+
+/* Leitura em telas pequenas -------------------------------------------------
+   A tabela rola dentro do próprio bloco em vez de esticar a página inteira,
+   e palavras muito longas (URLs, termos) quebram em vez de furar a largura.
+   Sem isso o celular precisa de zoom para caber. */
+.reader-table-wrap { margin: 1.5em 0; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.reader-table-wrap table { margin: 0; min-width: 32rem; }
+.reader-prose { overflow-wrap: break-word; word-break: break-word; }
+.reader-prose pre { max-width: 100%; overflow-x: auto; }
+.reader-prose img { max-width: 100%; height: auto; }
+
+@media (max-width: 640px) {
+  /* no celular a leitura ocupa a largura disponível e o texto encolhe um
+     pouco, para caber sem precisar afastar */
+  .reader-prose { max-width: 100% !important; font-size: 1rem; line-height: 1.75; }
+  .reader-prose h2 { font-size: 1.35em; }
+  .reader-table-wrap table { min-width: 26rem; font-size: 0.85em; }
+}
+
+/* ---------------------------------------------------------------------------
+   Base de segurança para telas pequenas.
+   Nada de overflow:hidden global — isso CORTA o conteúdo e impede o zoom.
+   Aqui só garantimos que texto longo QUEBRE em vez de furar a largura, que é
+   o que empurrava a página inteira para fora da tela no celular.
+   --------------------------------------------------------------------------- */
+h1, h2, h3, h4, p, span, a, li, td, th, label, button {
+  overflow-wrap: break-word;
+}
+/* mídia nunca ultrapassa o contêiner */
+img, video, canvas, svg.responsive { max-width: 100%; height: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }

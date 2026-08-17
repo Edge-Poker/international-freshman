@@ -1,0 +1,22 @@
+-- ============================================================
+-- INTERNATIONAL FRESHMAN — corpo das aulas (migration 0010)
+--
+-- No projeto de origem esta migration despejava o texto integral das
+-- aulas em chapters.body_md. Aqui ela esta VAZIA de proposito.
+--
+-- Por decisao de seguranca (ver migration 0023), o corpo das aulas NAO
+-- vive no banco: ele fica em content/course.ts e e servido direto pelo
+-- servidor, para que nenhuma consulta ao Postgres possa vazar conteudo
+-- pago. As tabelas parts/chapters guardam apenas a ESTRUTURA (titulo,
+-- resumo, minutos, posicao, is_free), populada pela migration 0004.
+--
+-- Para editar o texto de um capitulo, mexa em content/course.ts. Se
+-- mudar titulo, resumo ou ordem, regenere a 0004:
+--   npx tsx scripts/gen-seed.ts > supabase/migrations/0004_perfil_e_curso.sql
+--
+-- Mantida na sequencia para nao renumerar as migrations seguintes.
+-- Rode DEPOIS de 0001..0009.
+-- ============================================================
+
+-- intencionalmente sem alteracoes
+select 1;
