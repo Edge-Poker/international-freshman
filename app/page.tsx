@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Navbar } from "@/components/landing/navbar";
 import { Footer } from "@/components/landing/footer";
-import { CurriculumGrid } from "@/components/landing/curriculum-grid";
+// Visual do hero. Para voltar ao mapa estatico do curriculo, troque por
+// CurriculumGrid (components/landing/curriculum-grid.tsx) aqui e la embaixo.
+import { Arrival } from "@/components/landing/arrival";
 import { Button } from "@/components/ui/button";
 import { curso, allChapters } from "@/content/course";
 import { Compass, Users, Briefcase, CalendarCheck, Check, User } from "lucide-react";
@@ -79,7 +81,7 @@ export default function LandingPage() {
               <span><span className="text-white">4</span> exams</span>
             </div>
           </div>
-          <CurriculumGrid />
+          <Arrival />
         </section>
 
         {/* PILARES */}
