@@ -87,14 +87,19 @@ export default function LandingPage() {
             <p className="mt-3 font-mono text-xs text-dim">
               The Introduction and Chapter 1 are free. No card required.
             </p>
-            <div className="mt-9 flex flex-wrap gap-x-8 gap-y-2 border-t border-white/10 pt-6 font-mono text-sm text-dim">
+          </div>
+          {/* A faixa de numeros mora na coluna da direita, sob a cena: e o que
+              faz as duas colunas comecarem e terminarem na mesma altura. Antes
+              ela ficava no fim do texto, que entao passava do fim do card. */}
+          <div>
+            <ArrivalScene />
+            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 font-mono text-sm text-dim">
               <span><span className="text-white">{curso.length}</span> parts</span>
               <span><span className="text-white">{allChapters.length - 2}</span> chapters</span>
               <span><span className="text-white">4</span> exams</span>
               <span><span className="text-white">Freshman</span> to <span className="text-accent">Graduate</span></span>
             </div>
           </div>
-          <ArrivalScene />
         </section>
 
         {/* PILARES */}
