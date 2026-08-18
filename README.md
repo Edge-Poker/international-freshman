@@ -33,8 +33,11 @@ Grátis no plano Free: Introdução e Capítulo 1.
 
 - **Landing** (`app/page.tsx`): hero com o mapa do currículo animado, pilares,
   currículo completo, depoimentos (placeholders), planos e FAQ.
-- **Auth** completa via Supabase: login, cadastro, recuperação de senha, OAuth
-  Google e GitHub, confirmação de e-mail, captcha Turnstile.
+- **Auth** via Supabase: login, cadastro, recuperação de senha, confirmação de
+  e-mail (o perfil só é criado após confirmar) e captcha Turnstile opcional
+  (desligado enquanto `NEXT_PUBLIC_TURNSTILE_SITE_KEY` estiver vazia).
+  **Não há login social** — o projeto de origem tinha botões de Google/GitHub,
+  mas eles não existem neste código.
 - **Leitor de aulas** estilo Notion: tema claro/escuro, tamanho de fonte e largura
   ajustáveis (persistidos), favoritar, marcar como concluído, cronômetro de estudo.
 - **Provas**: 4 provas (uma por parte), 6 questões, 70% para passar, correção no
@@ -97,7 +100,9 @@ as policies de RLS são criadas mas não exercitadas ponta a ponta.
 
 1. Crie um projeto no [Supabase](https://supabase.com) e rode as migrations de
    `supabase/migrations` **em ordem numérica** (0001 → 0026) no SQL Editor.
-2. Em Authentication → Providers, ative Email, Google e GitHub.
+2. Em Authentication → Providers, deixe **Email** ativo (é o único que o código
+   usa) e confirme que "Confirm email" está ligado — a migration 0024 depende
+   disso: o perfil só é criado quando o e-mail é confirmado.
 3. Copie `.env.example` para `.env.local` e preencha as chaves.
 4. `npm install && npm run dev` → http://localhost:3000
 
