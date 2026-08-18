@@ -58,7 +58,10 @@ export default function LandingPage() {
       <Navbar />
       <main>
         {/* HERO */}
-        <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-28 sm:px-5 sm:pb-24 sm:pt-36 md:grid-cols-2">
+        {/* items-start alinha o topo do texto com o topo do card da cena.
+            Com items-center o card flutuava no meio e o texto, mais alto,
+            sobrava em cima e embaixo. */}
+        <section className="mx-auto grid max-w-6xl items-start gap-10 px-4 pb-16 pt-28 sm:px-5 sm:pb-24 sm:pt-36 md:grid-cols-2">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
               International Edition
