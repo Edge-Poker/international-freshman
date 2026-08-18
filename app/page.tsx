@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Navbar } from "@/components/landing/navbar";
 import { Footer } from "@/components/landing/footer";
-// Visual do hero. Para voltar ao mapa estatico do curriculo, troque por
-// CurriculumGrid (components/landing/curriculum-grid.tsx) aqui e la embaixo.
-import { Arrival } from "@/components/landing/arrival";
+// Visual do hero: a cena de chegada (SVG animado em CSS, sem JS).
+// Alternativas no repo, e so trocar o import e a tag la embaixo:
+//   Arrival        (components/landing/arrival.tsx)        arco de voo + mapa do curriculo
+//   CurriculumGrid (components/landing/curriculum-grid.tsx) mapa do curriculo estatico
+import { ArrivalScene } from "@/components/landing/arrival-scene";
 import { Button } from "@/components/ui/button";
 import { curso, allChapters } from "@/content/course";
 import { Compass, Users, Briefcase, CalendarCheck, Check, User } from "lucide-react";
@@ -46,7 +48,7 @@ const faq = [
   },
   {
     q: "How do I track what I have done?",
-    a: "Every chapter has an automatic checklist, and the dashboard shows overall progress, time studied, your streak and your class rank — Freshman through Graduate.",
+    a: "Every chapter has an automatic checklist, and the dashboard shows overall progress, time studied, your streak and your class rank, from Freshman through Graduate.",
   },
 ];
 
@@ -61,13 +63,17 @@ export default function LandingPage() {
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
               International Edition
             </p>
-            <h1 className="mt-4 font-display text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+            <h1 className="mt-4 font-display text-5xl font-black leading-[1.02] tracking-tight sm:text-6xl md:text-7xl">
               The guide{" "}
               <span className="text-accent">no one gave you.</span>
             </h1>
-            <p className="mt-6 max-w-md text-lg text-dim">
-              Twelve chapters on the first year nobody prepares you for: the academics,
-              the friendships, the money, the visa clock and the career.
+            <p className="mt-7 max-w-lg text-xl leading-snug text-white sm:text-2xl">
+              You got in. Nobody mentioned that was the easy part.
+            </p>
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-dim sm:text-lg">
+              Twelve chapters on the year that quietly decides the next three: the
+              classes, the friendships, the money, the visa clock, and the internships
+              you could already be applying for.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link href="/signup"><Button className="px-7 py-3 text-base">Start now</Button></Link>
@@ -75,13 +81,17 @@ export default function LandingPage() {
                 See the full curriculum
               </a>
             </div>
-            <div className="mt-10 flex gap-8 font-mono text-sm text-dim">
+            <p className="mt-3 font-mono text-xs text-dim">
+              The Introduction and Chapter 1 are free. No card required.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-x-8 gap-y-2 border-t border-white/10 pt-6 font-mono text-sm text-dim">
               <span><span className="text-white">{curso.length}</span> parts</span>
-              <span><span className="text-white">12</span> chapters</span>
+              <span><span className="text-white">{allChapters.length - 2}</span> chapters</span>
               <span><span className="text-white">4</span> exams</span>
+              <span><span className="text-white">Freshman</span> to <span className="text-accent">Graduate</span></span>
             </div>
           </div>
-          <Arrival />
+          <ArrivalScene />
         </section>
 
         {/* PILARES */}
@@ -162,7 +172,7 @@ export default function LandingPage() {
             ))}
           </div>
           <p className="mt-6 font-mono text-[11px] text-dim">
-            Illustrative examples — replace with real student testimonials before launch.
+            Illustrative examples. Replace with real student testimonials before launch.
           </p>
         </section>
 

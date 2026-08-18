@@ -119,3 +119,52 @@ img, video, canvas, svg.responsive { max-width: 100%; height: auto; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+
+/* ---------------------------------------------------------------------------
+   CENA DE CHEGADA (hero da landing) — components/landing/arrival-scene.tsx
+   Animacao puramente CSS; o componente e server-side e nao carrega JS.
+   --------------------------------------------------------------------------- */
+/* ============================================================
+   HERO "ARRIVAL" — apenas a maquinaria de animação vive aqui.
+   Toda a cor/geometria está inline no SVG (pinta imediatamente).
+   Loop mestre: 12s. Tudo abaixo é divisor de 12s.
+   ============================================================ */
+
+/* --cs = velocidade das nuvens (divisor do loop de 12s) */
+/* Sem interacao de cursor: a cena e ambiente puro. Os grupos de
+   profundidade continuam separados por clareza de leitura do SVG, mas
+   nenhum deles transforma — nao ha JS nesta animacao. */
+
+/* --- nuvens: cada faixa repete um tile; deslocar exatamente 1 tile = loop perfeito --- */
+.arrival-scene .drift{animation:a-drift 12s linear infinite;animation-duration:calc(12s / var(--cs,1))}
+@keyframes a-drift{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--tile)))}}
+
+/* --- deriva lentíssima do solo (sensação de avanço), ida e volta em 12s --- */
+.arrival-scene .cdrift{animation:a-city 6s ease-in-out infinite alternate}
+@keyframes a-city{from{transform:translate(0,0)}to{transform:translate(-4px,.8px)}}
+
+/* --- estrelas: opacidade base em --o para o estado estático ficar correto --- */
+.arrival-scene .star{opacity:var(--o,.6);animation:a-tw 6s ease-in-out infinite}
+@keyframes a-tw{0%,100%{opacity:var(--o,.6)}50%{opacity:calc(var(--o,.6) * .3)}}
+
+/* --- luzes de aproximação da pista: piscam em sequência --- */.arrival-scene .flash{opacity:.9;animation:a-flash 3s linear infinite}
+@keyframes a-flash{0%,7%{opacity:.95}16%,100%{opacity:.1}}
+
+/* --- luzes fortes do centro da cidade: pulso lento --- */
+.arrival-scene .blink{opacity:.8;animation:a-blink 6s ease-in-out infinite}
+@keyframes a-blink{0%,100%{opacity:.8}50%{opacity:.34}}
+
+/* --- farol da ponta da asa: estrobo duplo --- */
+.arrival-scene .beacon{opacity:.9;animation:a-beacon 3s linear infinite}
+@keyframes a-beacon{0%,3%{opacity:1}7%,11%{opacity:.12}14%{opacity:1}19%,100%{opacity:.08}}
+
+/* --- respiração do brilho do horizonte --- */
+.arrival-scene .bloom{opacity:.6;animation:a-bloom 12s ease-in-out infinite}
+@keyframes a-bloom{0%,100%{opacity:.22}50%{opacity:.4}}
+
+/* Sem movimento algum para quem pediu: o quadro parado ja e a cena.
+   Vale para as nuvens, as estrelas, as luzes e o brilho do horizonte. */
+@media (prefers-reduced-motion: reduce) {
+  .arrival-scene * { animation: none !important; }
+}

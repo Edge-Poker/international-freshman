@@ -9,7 +9,7 @@ export function Footer() {
             {BRAND}<span className="text-accent">.</span>
           </p>
           <p className="mt-2 max-w-xs text-sm text-dim">
-            The manual for your first year abroad — academics, campus life, money and career.
+            The manual for your first year abroad: academics, campus life, money and career.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3">
@@ -34,7 +34,7 @@ export function Footer() {
         </div>
       </div>
       <p className="mx-auto mt-10 max-w-6xl px-4 text-xs text-dim sm:px-5">
-        Educational material only. Nothing here is legal or immigration advice — visa,
+        Educational material only. Nothing here is legal or immigration advice. Visa,
         status and work-authorization rules change and vary by case. Always confirm with your
         Designated School Official or international student office before acting.
       </p>
