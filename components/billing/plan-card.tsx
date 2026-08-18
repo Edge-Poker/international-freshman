@@ -4,8 +4,9 @@ import { formatMoney } from "@/lib/format";
 import { PlanCta } from "@/components/billing/plan-cta";
 import type { BillingPlan, PlanCta as PlanCtaDescriptor } from "@/types/billing";
 
-/** Sufixo de preço por periodicidade. */
+/** Sufixo de preco por periodicidade. O gratuito nao tem periodicidade. */
 function priceSuffix(plan: BillingPlan) {
+  if (plan.slug === "free") return "";
   if (plan.interval === "monthly") return "/mo";
   if (plan.interval === "yearly") return "/yr";
   return " once";

@@ -45,8 +45,15 @@ async function db(client?: DB): Promise<DB> {
 // Planos
 // ------------------------------------------------------------------
 
-/** Nome comercial derivado do interval (a página vende por periodicidade). */
-export function planDisplayName(interval: PlanInterval): string {
+/**
+ * Nome comercial derivado do interval (a pagina vende por periodicidade).
+ *
+ * O gratuito e a excecao: ele existe como 'monthly' no banco porque a
+ * coluna interval nao aceita nulo, mas nao e "o plano mensal". Sem este
+ * caso especial o card do Free aparece rotulado "Monthly $0/mo".
+ */
+export function planDisplayName(interval: PlanInterval, slug?: string): string {
+  if (slug === "free") return "Free";
   if (interval === "yearly") return "Yearly";
   if (interval === "lifetime") return "Lifetime";
   return "Monthly";
@@ -60,7 +67,7 @@ function toBillingPlan(p: {
     id: p.id,
     slug: p.slug as BillingPlanSlug,
     title: p.title,
-    displayName: planDisplayName(p.interval),
+    displayName: planDisplayName(p.interval, p.slug),
     price_cents: p.price_cents,
     interval: p.interval,
     features: Array.isArray(p.features) ? p.features : [],
