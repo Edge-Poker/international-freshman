@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:db": "node scripts/db-test/run.mjs",
-    "shot": "node scripts/shot.mjs"
+    "shot": "node scripts/shot.mjs",
+    "prebuild": "node scripts/guard-dev.mjs"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.3",
