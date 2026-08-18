@@ -7,6 +7,10 @@
 create table public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   name text,
+  -- @handle publico do usuario: aparece no forum, no chat e em /u/[nickname].
+  -- Fica nulo ate o usuario escolher um (o trigger da 0024 preenche a partir
+  -- do metadata do cadastro e resolve colisao somando um numero).
+  nickname text,
   avatar_url text,
   plan text not null default 'free' check (plan in ('free','pro','vitalicio')),
   xp integer not null default 0,
@@ -17,6 +21,13 @@ create table public.profiles (
   is_moderator boolean not null default false,
   created_at timestamptz not null default now()
 );
+
+-- Unicidade do nickname SEM diferenciar maiuscula/minuscula: e assim que
+-- public.nickname_disponivel (0023) e o trigger da 0024 comparam, e o
+-- cadastro depende de receber erro de unique para avisar "ja esta em uso".
+-- Multiplos NULL sao permitidos, entao quem ainda nao escolheu nao conflita.
+create unique index idx_profiles_nickname_lower
+  on public.profiles (lower(nickname));
 
 -- cria o profile automaticamente no signup
 create or replace function public.handle_new_user()

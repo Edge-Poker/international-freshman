@@ -76,6 +76,23 @@ anual, $29 vitalício (`supabase/migrations/0019_precos_planos.sql`, a UI nunca 
 preço no frontend). O plano pós-validação previsto é $29–$49, e até $79+ no bundle
 com vídeo.
 
+## Validar o banco sem Supabase
+
+Antes de subir qualquer coisa na nuvem, dá para aplicar as 26 migrations num
+Postgres real rodando em modo usuário — sem Docker, sem senha de admin, sem conta:
+
+```
+npm i -D embedded-postgres
+npm run test:db
+```
+
+O script sobe o Postgres, recria o mínimo do ambiente Supabase
+(`scripts/db-test/supabase-shim.sql`: schema `auth`, `storage` e os roles),
+aplica as migrations em ordem e roda 18 verificações funcionais dos gatilhos —
+cadastro, colisão de nickname, progresso, rank, XP, regras de acesso e a busca
+do fórum. **Não substitui um Supabase real**: não há PostgREST nem GoTrue, então
+as policies de RLS são criadas mas não exercitadas ponta a ponta.
+
 ## Como rodar
 
 1. Crie um projeto no [Supabase](https://supabase.com) e rode as migrations de

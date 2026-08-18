@@ -54,5 +54,17 @@ begin
   return null;
 end; $$;
 
+-- O gatilho que chama a funcao acima. Sem ele, profiles.chapters_done fica
+-- parado em 0 e a plataforma inteira mostra 0% de progresso (lib/format.ts
+-- calcula a % a partir dessa coluna).
+drop trigger if exists trg_chapters_done on public.lesson_progress;
+create trigger trg_chapters_done
+  after insert or update or delete on public.lesson_progress
+  for each row execute procedure public.sync_chapters_done();
+
 -- recalcular todo mundo uma vez com a nova regra
 update public.profiles pr set rank_parts = public.compute_rank(pr.id);
+update public.profiles pr set chapters_done = (
+  select count(*) from public.lesson_progress lp
+  where lp.user_id = pr.id and lp.status = 'concluido'
+);
