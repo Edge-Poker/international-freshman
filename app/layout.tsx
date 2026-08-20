@@ -30,10 +30,16 @@ export const viewport: Viewport = {
  * Ordem: a variavel explicita ganha; senao usa o dominio que a Vercel
  * injeta sozinha em cada deploy; em ultimo caso, o localhost do dev.
  * Ao registrar um dominio proprio, basta definir NEXT_PUBLIC_SITE_URL.
+ *
+ * Usa `||` e nao `??` de proposito: variavel de ambiente ausente chega
+ * como string vazia em varios cenarios de build, e `??` so cai no proximo
+ * valor quando encontra undefined. Com `??` o primeiro deploy quebrou
+ * exatamente aqui, em `new URL("")`, depois de compilar sem erro.
  */
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+  "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
