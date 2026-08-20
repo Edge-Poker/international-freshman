@@ -1,4 +1,5 @@
 import { BRAND } from "@/components/brand-logo";
+import { SUPPORT_EMAIL } from "@/lib/support";
 
 export function Footer() {
   return (
@@ -21,9 +22,8 @@ export function Footer() {
           </div>
           <div className="flex flex-col gap-2 text-dim">
             <span className="mb-1 font-mono text-xs uppercase tracking-widest text-white">Contact</span>
-            {/* TODO: trocar pelo e-mail real de suporte da plataforma */}
-            <a href="mailto:hello@example.com" className="break-all hover:text-accent">
-              hello@example.com
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="break-all hover:text-accent">
+              {SUPPORT_EMAIL}
             </a>
           </div>
           <div className="flex flex-col gap-2 text-dim">

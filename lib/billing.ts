@@ -340,6 +340,13 @@ async function iniciarCheckoutMP(
   req: CheckoutRequest,
   client?: DB
 ): Promise<CheckoutResponse> {
+  // Sem credencial do gateway o checkout nunca vai completar. Dizer isso
+  // de frente e melhor do que o "tente novamente em instantes" generico
+  // do catch abaixo, que faria a pessoa insistir num botao quebrado.
+  if (!process.env.MERCADOPAGO_ACCESS_TOKEN) {
+    return { status: "error", message: NOT_IMPLEMENTED_MESSAGE };
+  }
+
   try {
     const supabase = await db(client);
 

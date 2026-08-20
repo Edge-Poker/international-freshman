@@ -7,3 +7,6 @@ next-env.d.ts
 
 # estado local do setup do Supabase
 scripts/supabase-setup/.target-ref
+
+# artefatos da Vercel CLI
+.vercel

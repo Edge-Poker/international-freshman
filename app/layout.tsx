@@ -23,9 +23,20 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
-// TODO: apontar para o dominio real assim que ele estiver registrado.
+/**
+ * Endereco publico do site, usado para resolver as URLs absolutas de
+ * Open Graph (a previa do link no WhatsApp, LinkedIn e afins).
+ *
+ * Ordem: a variavel explicita ganha; senao usa o dominio que a Vercel
+ * injeta sozinha em cada deploy; em ultimo caso, o localhost do dev.
+ * Ao registrar um dominio proprio, basta definir NEXT_PUBLIC_SITE_URL.
+ */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "How to Be an International Freshman",
     template: "%s | Freshman",
