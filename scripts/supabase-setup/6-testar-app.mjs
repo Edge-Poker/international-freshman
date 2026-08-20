@@ -15,7 +15,8 @@ import path from "node:path";
 import { refAlvo } from "./lib.mjs";
 
 const ref = refAlvo();
-const BASE = "http://localhost:3000";
+// Aponta para producao com BASE_URL=https://... ; sem isso, testa o local.
+const BASE = process.env.BASE_URL ?? "http://localhost:3000";
 const env = fs.readFileSync(path.join(os.homedir(), ".freshman-admin-login"), "utf8");
 const email = env.match(/email: (.+)/)[1].trim();
 const senha = env.match(/senha: (.+)/)[1].trim();
