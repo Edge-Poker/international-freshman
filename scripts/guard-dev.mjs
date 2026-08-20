@@ -12,9 +12,21 @@
  */
 import { execSync } from "node:child_process";
 
+// Em CI nao existe dev server para atrapalhar, e um falso positivo aqui
+// derruba o deploy. Ja aconteceu: na Vercel o pgrep casou com um processo
+// do proprio container e a build de producao falhou. Esta guarda e uma
+// conveniencia local e so deve rodar localmente.
+if (process.env.CI || process.env.VERCEL || process.env.GITHUB_ACTIONS) {
+  process.exit(0);
+}
+
 let rodando = "";
 try {
-  rodando = execSync("pgrep -f 'next dev' 2>/dev/null || true").toString().trim();
+  // O padrao exige o inicio do comando para nao casar com qualquer linha
+  // que por acaso contenha as palavras "next dev".
+  rodando = execSync("pgrep -f '(^|/)(node|npm|npx|next).*next dev' 2>/dev/null || true")
+    .toString()
+    .trim();
 } catch {
   // pgrep ausente (outro SO): sem guarda, segue o build
 }
